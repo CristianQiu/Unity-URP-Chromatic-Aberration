@@ -25,6 +25,7 @@ public sealed class ChromaticAberrationRenderPass : ScriptableRenderPass
 
 	#region Private Attributes
 
+	private static readonly int DisplacementId = Shader.PropertyToID("_Displacement");
 	private static readonly int IntensityId = Shader.PropertyToID("_Intensity");
 
 	private Material material;
@@ -93,7 +94,8 @@ public sealed class ChromaticAberrationRenderPass : ScriptableRenderPass
 	{
 		ChromaticAberrationVolume volume = VolumeManager.instance.stack.GetComponent<ChromaticAberrationVolume>();
 
-		material.SetFloat(IntensityId, volume.intensity.value * 0.1f);
+		material.SetFloat(DisplacementId, volume.displacement.value * 0.1f);
+		material.SetFloat(IntensityId, volume.intensity.value);
 	}
 
 	/// <summary>

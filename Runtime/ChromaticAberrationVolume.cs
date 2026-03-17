@@ -13,7 +13,8 @@ public sealed class ChromaticAberrationVolume : VolumeComponent, IPostProcessCom
 {
 	#region Public Attributes
 
-	public ClampedFloatParameter intensity = new ClampedFloatParameter(0.0f, 0.0f, 1.0f);
+	public ClampedFloatParameter displacement = new ClampedFloatParameter(0.0f, 0.0f, 1.0f);
+	public ClampedFloatParameter intensity = new ClampedFloatParameter(1.0f, 0.0f, 1.0f);
 
 	#endregion
 
@@ -25,7 +26,7 @@ public sealed class ChromaticAberrationVolume : VolumeComponent, IPostProcessCom
 	/// <returns></returns>
 	public bool IsActive()
 	{
-		return intensity.value > 0.0f;
+		return displacement.value > 0.0f && intensity.value > 0.0f;
 	}
 
 	#endregion

@@ -33,7 +33,7 @@ Shader "Hidden/ChromaticAberration"
 
                 float2 uv = input.texcoord;
                 float2 offset = uv - float2(0.5, 0.5);
-                offset = min(abs(offset), float2(0.1, 0.1)) * sign(offset);
+                offset = clamp(offset, -0.1, 0.1);
 
                 float2 uvR = uv;
                 float2 uvG = uv - offset * _Displacement; 

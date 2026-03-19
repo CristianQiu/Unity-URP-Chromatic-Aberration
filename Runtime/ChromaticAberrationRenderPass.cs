@@ -37,7 +37,7 @@ public sealed class ChromaticAberrationRenderPass : ScriptableRenderPass
 	public ChromaticAberrationRenderPass(Material material) : base()
 	{
 		profilingSampler = new ProfilingSampler("Chromatic Aberration");
-		renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
+		renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
 		requiresIntermediateTexture = false;
 
 		this.material = material;

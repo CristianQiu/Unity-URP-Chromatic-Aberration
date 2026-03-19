@@ -83,7 +83,13 @@ public sealed class ChromaticAberrationRenderPass : ScriptableRenderPass
 	/// <returns></returns>
 	private TextureHandle CreateRenderGraphTextures(RenderGraph renderGraph, UniversalResourceData resourceData)
 	{
-		return renderGraph.CreateTexture(resourceData.activeColorTexture, "_ChromaticAberration");
+		TextureDesc descriptor = renderGraph.GetTextureDesc(resourceData.activeColorTexture);
+		descriptor.name = "_ChromaticAberration";
+		descriptor.clearBuffer = false;
+		descriptor.depthBufferBits = 0;
+		descriptor.msaaSamples = MSAASamples.None;
+
+		return renderGraph.CreateTexture(descriptor);
 	}
 
 	/// <summary>

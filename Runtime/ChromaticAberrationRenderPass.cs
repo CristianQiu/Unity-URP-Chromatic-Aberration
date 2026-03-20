@@ -55,6 +55,7 @@ public sealed class ChromaticAberrationRenderPass : ScriptableRenderPass
 	public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
 	{
 		UniversalResourceData resourceData = frameData.Get<UniversalResourceData>();
+
 		TextureHandle blitHandle = CreateRenderGraphTextures(renderGraph, resourceData);
 
 		using (IRasterRenderGraphBuilder builder = renderGraph.AddRasterRenderPass("Chromatic Aberration", out PassData passData, profilingSampler))

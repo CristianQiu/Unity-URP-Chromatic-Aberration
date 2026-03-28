@@ -25,9 +25,9 @@ Shader "Hidden/ChromaticAberration"
             #pragma fragment Frag
 
             float _Displacement;
-            float _Intensity;
+            half _Intensity;
 
-            float4 Frag(Varyings input) : SV_Target
+            half4 Frag(Varyings input) : SV_Target
             {
                 UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
@@ -39,16 +39,13 @@ Shader "Hidden/ChromaticAberration"
                 float2 uvG = uv - offset * _Displacement; 
                 float2 uvB = uv - offset * (2.0 * _Displacement);
 
-                float4 center = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_PointClamp, uvR);
-                float g = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uvG).g;
-                float b = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uvB).b;
+                half4 center = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_PointClamp, uvR);
+                half g = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uvG).g;
+                half b = SAMPLE_TEXTURE2D_X(_BlitTexture, sampler_LinearClamp, uvB).b;
 
-                float r = center.r;
-                g = lerp(center.g, g, _Intensity);
-                b = lerp(center.b, b, _Intensity);
-                float a = center.a;
+                half2 gb = lerp(center.gb, half2(g, b), _Intensity);
 
-                return float4(r, g, b, a);
+                return half4(center.r, gb, center.a);
             }
 
             ENDHLSL
